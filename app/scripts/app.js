@@ -18,12 +18,18 @@ blocJams.config(function($stateProvider, $locationProvider) {
       controller: 'CollectionCtrl',
       templateUrl: '/templates/collection.html'
     })
-    .state('album', {
+    .state('artist', {
+      abstract: true,
+      templateUrl: '/templates/album.html',
+      controller: 'AlbumCtrl'
+    })
+    .state('artist.album', {
       url: '/album',
-      controller: 'AlbumCtrl',
-      templateUrl: '/templates/album.html'
-    });
+      templateUrl: '/templates/table.html',
+    })
 });
+
+blocJams.service('GetAlbums')
 
 blocJams.controller('LandingCtrl', ['$scope', function($scope) {
   $scope.tagline = 'Turn the music up!';
@@ -35,9 +41,11 @@ blocJams.controller('CollectionCtrl', ['$scope', '$http', function($scope, $http
   $scope.album = albumPicasso;
 }]);
 
-blocJams.controller('AlbumCtrl', ['$scope', '$http', function($scope, $http){
-  $http.get("http://localhost:3000/scripts/fixtures.js")
-    .success(function(data) {});
-  $scope.album = albumPicasso;
-  $scope.albumSongs = albumPicasso.songs;
+blocJams.controller('AlbumCtrl', 
+  ['$scope', '$http', function($scope, $http){
+  
+    $http.get("http://localhost:3000/scripts/fixtures.js")
+      .success(function(data) {});
+
+    $scope.album = albumPicasso;
 }]);

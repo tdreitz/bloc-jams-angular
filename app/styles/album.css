@@ -52,6 +52,10 @@ div.album {
   min-width: 30px;
 }
 
+.song-item-number {
+  cursor: pointer;
+}
+
 .song-item-title {
   width: 85%;
 }
