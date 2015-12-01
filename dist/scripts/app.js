@@ -29,14 +29,6 @@ blocJams.config(function($stateProvider, $locationProvider) {
     })
 });
 
-blocJams.factory('fetchAlbums', 
-  ['$http', function($http) {
-    $http.get("http://localhost:3000/scripts/fixtures.js")
-      .then(function(response) {
-        return albumPicasso;
-      })
-  }]);
-
 blocJams.controller('LandingCtrl', ['$scope', function($scope) {
   $scope.tagline = 'Turn the music up!';
   $scope.points = {
@@ -47,19 +39,42 @@ blocJams.controller('LandingCtrl', ['$scope', function($scope) {
 }]);
 
 blocJams.controller('CollectionCtrl', 
-  ['$scope', 'fetchAlbums', 
-    function($scope, fetchAlbums) {
+  ['$scope', 
+    function($scope) {
       $scope.album = albumPicasso
 }]);
 
 blocJams.controller('AlbumCtrl', 
-  ['$scope', 'fetchAlbums', 
-    function($scope, fetchAlbums){
-      $scope.album = albumPicasso;
+  ['$scope', 'musicPlayer',
+    function($scope, musicPlayer){
+      // $scope.album = albumPicasso;
+
+      $scope.currentSoundFile;
+
+      console.log($scope.currentSoundFile);
 }]);
 
 blocJams.directive('bjPoints', function() {
   return {
     templateUrl: '/directive/selling-points.html'
   }
-})
+});
+
+blocJams.service('musicPlayer', function() {
+  var currentSoundFile;
+  var currentSoundFile = new buzz.sound("/../assets/music/blue.mp3");
+  return currentSoundFile;
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
