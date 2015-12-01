@@ -2,20 +2,11 @@
   <h1 class="hero-title"> {{ tagline }} </h1>
 </section>
 
-<section class="selling-points container clearfix"><!-- Selling Points -->
-  <div class="point column third">
-    <span class="ion-music-note"></span>
-    <h5 class="point-title"> Choose your music </h5>
-    <p class="point-description"> The world is full of music; why should you have to listen to music someone else chose</p>
-  </div>      
-  <div class="point column third">
-    <span class="ion-radio-waves"></span>
-    <h5 class="point-title"> Choose your music </h5>
-    <p class="point-description"> The world is full of music; why should you have to listen to music someone else chose</p>
-  </div>  
-  <div class="point column third">
-    <span class="ion-iphone"></span>
-    <h5 class="point-title"> Choose your music </h5>
-    <p class="point-description"> The world is full of music; why should you have to listen to music someone else chose</p>
-  </div>  
-</section>z
+<section class="selling-points container clearfix">
+  <div ng-repeat="item in [1,2,3]" class="point column third">
+    <span class="ion-{{points.icons[$index]}}"></span>
+    <h5 class="point-title"> {{ points.title[$index] }} </h5>
+    <p class="point-description"> {{ points.detail }}</p>
+  </div>    
+</section>
+

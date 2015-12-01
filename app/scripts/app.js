@@ -29,23 +29,31 @@ blocJams.config(function($stateProvider, $locationProvider) {
     })
 });
 
-blocJams.service('GetAlbums')
+blocJams.factory('fetchAlbums', 
+  ['$http', function($http) {
+    $http.get("http://localhost:3000/scripts/fixtures.js")
+      .then(function(response) {
+        return albumPicasso;
+      })
+  }]);
 
 blocJams.controller('LandingCtrl', ['$scope', function($scope) {
   $scope.tagline = 'Turn the music up!';
+  $scope.points = {
+    icons: ['music-note','radio-waves','iphone'],
+    title: ['Choose your music', 'Stream it anywhere', 'Even on the go'],
+    detail: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste cupiditate numquam delectus.'
+  }
 }]);
 
-blocJams.controller('CollectionCtrl', ['$scope', '$http', function($scope, $http) {
-  $http.get("http://localhost:3000/scripts/fixtures.js")
-    .success(function(data) {});
-  $scope.album = albumPicasso;
+blocJams.controller('CollectionCtrl', 
+  ['$scope', 'fetchAlbums', 
+    function($scope, fetchAlbums) {
+      $scope.album = albumPicasso
 }]);
 
 blocJams.controller('AlbumCtrl', 
-  ['$scope', '$http', function($scope, $http){
-  
-    $http.get("http://localhost:3000/scripts/fixtures.js")
-      .success(function(data) {});
-
-    $scope.album = albumPicasso;
+  ['$scope', 'fetchAlbums', 
+    function($scope, fetchAlbums){
+      $scope.album = albumPicasso;
 }]);
