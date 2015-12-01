@@ -57,3 +57,9 @@ blocJams.controller('AlbumCtrl',
     function($scope, fetchAlbums){
       $scope.album = albumPicasso;
 }]);
+
+blocJams.directive('bjPoints', function() {
+  return {
+    templateUrl: '/directive/selling-points.html'
+  }
+})
