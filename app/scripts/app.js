@@ -49,9 +49,9 @@ blocJams.controller('AlbumCtrl',
     function($scope, musicPlayer){
       // $scope.album = albumPicasso;
 
-      $scope.currentSoundFile;
+      $scope.currentSoundFile = musicPlayer;
 
-      console.log($scope.currentSoundFile);
+      console.log($scope);
 }]);
 
 blocJams.directive('bjPoints', function() {
@@ -61,9 +61,17 @@ blocJams.directive('bjPoints', function() {
 });
 
 blocJams.service('musicPlayer', function() {
-  var currentSoundFile;
-  var currentSoundFile = new buzz.sound("/../assets/music/blue.mp3");
-  return currentSoundFile;
+  var mySound1 = new buzz.sound("/../assets/music/blue.mp3"),
+      mySound2 = new buzz.sound("/../assets/music/green.mp3"),
+      mySound3 = new buzz.sound("/../assets/music/red.mp3"),
+      mySound4 = new buzz.sound("/../assets/music/pink.mp3"),
+      mySound5 = new buzz.sound("/../assets/music/magenta.mp3");
+
+  var currentAlbum = [mySound1, mySound2, mySound3, mySound4, mySound5];
+
+  console.log(currentAlbum);
+
+  return currentAlbum
 });
 
 
