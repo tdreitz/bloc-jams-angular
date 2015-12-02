@@ -49,15 +49,15 @@ blocJams.controller('AlbumCtrl',
     function($scope, $log, musicPlayer){
 
       $scope.musicPlayer = musicPlayer
-      $log.log($scope.musicPlayer.albumsObject)
-      $log.log($scope.musicPlayer.albumsObject.picasso)
+      // $log.log($scope.musicPlayer.albumsObject)
+      // $log.log($scope.musicPlayer.albumsObject.picasso)
 
       $scope.playAndTrack = function() {
         $scope.musicPlayer.albumsObject.picasso.songs[0].buzzSoundFile.togglePlay();
 
         $scope.musicPlayer[1] = !$scope.musicPlayer.albumsObject.picasso.songs[0].buzzSoundFile.isPaused();
 
-        $log.log($scope.musicPlayer);
+        //$log.log($scope.musicPlayer);
       }     
 
       $scope.get_song_prop = function(prop) {
