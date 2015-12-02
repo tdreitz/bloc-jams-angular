@@ -5,9 +5,9 @@
         <img src="../assets/images/album_covers/01.png" class="album-cover-art" alt="album-cover">
       </div>
       <div class="album-view-details column half">
-        <h2 class="album-view-title"> {{ album.name }} </h2>
-        <h3 class="album-view-artist"> {{ album.artist }} </h3>
-        <h5 class="album-view-release-info">{{ album.year + ' ' + album.label }}</h5>
+        <h2 class="album-view-title"> {{ album_info.name }} </h2>
+        <h3 class="album-view-artist"> {{ album_info.artist }} </h3>
+        <h5 class="album-view-release-info">{{ album_info.year + ' ' + album_info.label }}</h5>
 
       </div>
     </section>
@@ -20,7 +20,7 @@
         <a class="previous">
           <span class="ion-skip-backward"></span>
         </a>
-        <a ng-click="currentSoundFile[0].togglePlay()" class="play-pause">
+        <a ng-click="playAndTrack()" class="play-pause">
           <span class="ion-play"></span>
         </a>
         <a class="next">
@@ -29,9 +29,9 @@
       </div>
 
       <div class="control-group currently-playing">
-        <h2 class="artist-song-mobile"></h2>
-        <h2 class="song-name"></h2>
-        <h2 class="artist-name"></h2>
+        <h2 class="artist-song-mobile"> {{ album_info.artist + ' - ' + song_name}}</h2>
+        <h2 class="song-name">{{ song_name }}</h2>
+        <h2 class="artist-name"> {{ artist_name }} </h2>
         <div class="seek-control">
           <div class="seek-bar">
             <div class="fill"></div>

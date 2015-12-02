@@ -1,7 +1,7 @@
 <table class="album-view-song-list">
-  <tr ng-repeat="song in album.songs" class="album-view-song-item">
-     <td class="song-item-number" ng-mouseover="songRowOnHover()" data-song-number=""> {{ $index + 1 }} </td>
-    <td class="song-item-title">  {{ album.songs[$index].name }}  </td>
-    <td class="song-item-duration">  {{ album.songs[$index].length }}  </td>
+  <tr ng-repeat="song in songs_list" class="album-view-song-item">
+     <td class="song-item-number" data-song-number=""> {{ $index + 1 }} </td>
+    <td class="song-item-title">  {{ song_list_names[$index] }}  </td>
+    <td class="song-item-duration">  {{ song_list_length[$index] }}  </td>
   </tr>
 </table>

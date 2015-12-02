@@ -45,13 +45,36 @@ blocJams.controller('CollectionCtrl',
 }]);
 
 blocJams.controller('AlbumCtrl', 
-  ['$scope', 'musicPlayer',
-    function($scope, musicPlayer){
-      // $scope.album = albumPicasso;
+  ['$scope', '$log', 'musicPlayer',
+    function($scope, $log, musicPlayer){
 
-      $scope.currentSoundFile = musicPlayer;
+      $scope.musicPlayer = musicPlayer
+      $log.log($scope.musicPlayer.albumsObject)
+      $log.log($scope.musicPlayer.albumsObject.picasso)
 
-      console.log($scope);
+      $scope.playAndTrack = function() {
+        $scope.musicPlayer.albumsObject.picasso.songs[0].buzzSoundFile.togglePlay();
+
+        $scope.musicPlayer[1] = !$scope.musicPlayer.albumsObject.picasso.songs[0].buzzSoundFile.isPaused();
+
+        $log.log($scope.musicPlayer);
+      }     
+
+      $scope.get_song_prop = function(prop) {
+        var song_array = [];
+        $scope.songs_list.forEach(function(element, index){
+          song_array.push(element[prop]);
+        });
+        return song_array;
+      }
+
+      $scope.album_info = $scope.musicPlayer.albumsObject.picasso
+      $scope.songs_list = $scope.album_info.songs;
+      $scope.song_list_names = $scope.get_song_prop('name');
+      $scope.song_list_length = $scope.get_song_prop('length');
+      
+      // $log.log($scope.song_list_names);
+
 }]);
 
 blocJams.directive('bjPoints', function() {
@@ -61,17 +84,26 @@ blocJams.directive('bjPoints', function() {
 });
 
 blocJams.service('musicPlayer', function() {
-  var mySound1 = new buzz.sound("/../assets/music/blue.mp3"),
-      mySound2 = new buzz.sound("/../assets/music/green.mp3"),
-      mySound3 = new buzz.sound("/../assets/music/red.mp3"),
-      mySound4 = new buzz.sound("/../assets/music/pink.mp3"),
-      mySound5 = new buzz.sound("/../assets/music/magenta.mp3");
 
-  var currentAlbum = [mySound1, mySound2, mySound3, mySound4, mySound5];
+  var albums = {
+    picasso: albumPicasso, 
+    marconi: albumMarconi
+  }
 
-  console.log(currentAlbum);
+  var addBuzzSoundFile = function(element, index, array) {
+    array[index].buzzSoundFile = new buzz.sound(albums.picasso.songs[index].audioUrl);
+  }
 
-  return currentAlbum
+  albums.picasso.songs.forEach(addBuzzSoundFile);
+
+  var currentlyPlayingSong =  null;
+
+  var persistentData = {
+    albumsObject: albums,
+    currentlyPlayingSong: null
+  };
+
+  return persistentData;
 });
 
 
