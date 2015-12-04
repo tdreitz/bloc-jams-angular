@@ -76,16 +76,18 @@ blocJams.controller('AlbumCtrl',
 
       $scope.next = function() {
         var nextSong;
+
         for (var i = 0; i < $scope.songs_list.length; i++) {
           if ($scope.songs_list[i] === $scope.currentSong) {
-            $log.log(i);
-            // $log.log($scope.currentSong = $scope.songs_list[i]);
-            $log.log(i + 1);
             nextSong = $scope.songs_list[i + 1];
             $log.log(nextSong);
           }
         };
 
+        if (!$scope.currentSong.buzzSoundFile.isPaused()) {
+          $scope.currentSong.buzzSoundFile.stop();
+          nextSong.buzzSoundFile.play();
+        }
         $scope.currentSong = nextSong;
       }
 
