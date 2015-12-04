@@ -20,7 +20,7 @@
         <a class="previous">
           <span class="ion-skip-backward"></span>
         </a>
-        <a ng-click="playAndTrack()" class="play-pause">
+        <a ng-click="playerBarToggle()" class="play-pause">
           <span class="ion-play"></span>
         </a>
         <a class="next">
@@ -29,9 +29,9 @@
       </div>
 
       <div class="control-group currently-playing">
-        <h2 class="artist-song-mobile"> {{ album_info.artist + ' - ' + song_name}}</h2>
-        <h2 class="song-name">{{ song_name }}</h2>
-        <h2 class="artist-name"> {{ artist_name }} </h2>
+        <h2 class="artist-song-mobile"> {{ album_info.artist }}<span ng-if="currentSong"> - </span>{{ currentSong.name }}</h2>
+        <h2 class="song-name">{{ currentSong.name }}</h2>
+        <h2 class="artist-name"> {{ album_info.artist }} </h2>
         <div class="seek-control">
           <div class="seek-bar">
             <div class="fill"></div>
