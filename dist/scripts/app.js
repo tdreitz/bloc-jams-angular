@@ -95,9 +95,23 @@ blocJams.controller('AlbumCtrl',
       }
 
       $scope.previous = function() {
-        $log.log($scope.songs_list);
-        $log.log($scope.currentSong);
+        var previousSong;
 
+        for (var i = 0; i < $scope.songs_list.length; i++) {
+          if ($scope.songs_list[i] === $scope.currentSong) {
+            previousSong = $scope.songs_list[i - 1];
+            if($scope.currentSong === $scope.songs_list[0]) {
+              previousSong = $scope.songs_list[4];
+            }
+          } 
+        };
+
+        if (!$scope.currentSong.buzzSoundFile.isPaused()) {
+          $scope.currentSong.buzzSoundFile.stop();
+          previousSong.buzzSoundFile.play();
+        }
+
+        $scope.currentSong = previousSong;
       }
 
       $scope.musicPlayer = musicPlayer
