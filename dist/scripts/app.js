@@ -80,14 +80,17 @@ blocJams.controller('AlbumCtrl',
         for (var i = 0; i < $scope.songs_list.length; i++) {
           if ($scope.songs_list[i] === $scope.currentSong) {
             nextSong = $scope.songs_list[i + 1];
-            $log.log(nextSong);
-          }
+            if($scope.currentSong === $scope.songs_list[4]) {
+              nextSong = $scope.songs_list[0];
+            }
+          } 
         };
 
         if (!$scope.currentSong.buzzSoundFile.isPaused()) {
           $scope.currentSong.buzzSoundFile.stop();
           nextSong.buzzSoundFile.play();
         }
+
         $scope.currentSong = nextSong;
       }
 
