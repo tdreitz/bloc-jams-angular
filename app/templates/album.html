@@ -16,17 +16,7 @@
 
   <section class="player-bar">
     <div class="container">
-      <div class="control-group main-controls">
-        <a class="previous">
-          <span class="ion-skip-backward"></span>
-        </a>
-        <a ng-click="playerBarToggle()" class="play-pause">
-          <span class="ion-play"></span>
-        </a>
-        <a class="next">
-          <span class="ion-skip-forward"></span>
-        </a>
-      </div>
+      <main-controls></main-controls>
 
       <div class="control-group currently-playing">
         <h2 class="artist-song-mobile"> {{ album_info.artist }}<span ng-if="currentSong"> - </span>{{ currentSong.name }}</h2>

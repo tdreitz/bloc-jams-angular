@@ -48,6 +48,14 @@ blocJams.controller('AlbumCtrl',
   ['$scope', '$log', 'musicPlayer',
     function($scope, $log, musicPlayer){
 
+      $scope.get_song_prop = function(prop) {
+        var song_array = [];
+        $scope.songs_list.forEach(function(element, index){
+          song_array.push(element[prop]);
+        });
+        return song_array;
+      };
+
       $scope.playAndTrack = function(index) {
         if ($scope.currentSong === null) {
           $scope.currentSong = $scope.songs_list[index];
@@ -64,15 +72,28 @@ blocJams.controller('AlbumCtrl',
 
       $scope.playerBarToggle = function() {
         $scope.currentSong.buzzSoundFile.togglePlay();
+      };
+
+      $scope.next = function() {
+        var nextSong;
+        for (var i = 0; i < $scope.songs_list.length; i++) {
+          if ($scope.songs_list[i] === $scope.currentSong) {
+            $log.log(i);
+            // $log.log($scope.currentSong = $scope.songs_list[i]);
+            $log.log(i + 1);
+            nextSong = $scope.songs_list[i + 1];
+            $log.log(nextSong);
+          }
+        };
+
+        $scope.currentSong = nextSong;
       }
 
-      $scope.get_song_prop = function(prop) {
-        var song_array = [];
-        $scope.songs_list.forEach(function(element, index){
-          song_array.push(element[prop]);
-        });
-        return song_array;
-      };
+      $scope.previous = function() {
+        $log.log($scope.songs_list);
+        $log.log($scope.currentSong);
+
+      }
 
       $scope.musicPlayer = musicPlayer
       $scope.album_info = $scope.musicPlayer.albumsObject.picasso      
@@ -88,6 +109,14 @@ blocJams.directive('bjPoints', function() {
     templateUrl: '/directive/selling-points.html'
   }
 });
+
+blocJams.directive('mainControls', function() {
+  return {
+    restrict: 'AE',
+    templateUrl: '/templates/main-controls.html',
+    replace: true
+  }
+})
 
 blocJams.service('musicPlayer', function() {
 
