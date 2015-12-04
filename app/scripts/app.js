@@ -18,24 +18,21 @@ blocJams.config(function($stateProvider, $locationProvider) {
       controller: 'CollectionCtrl',
       templateUrl: '/templates/collection.html'
     })
-    .state('artist', {
-      abstract: true,
+    .state('album', {
+      url:'/album',
       templateUrl: '/templates/album.html',
       controller: 'AlbumCtrl'
     })
-    .state('artist.album', {
-      url: '/album',
-      templateUrl: '/templates/table.html',
-    })
 });
 
-blocJams.controller('LandingCtrl', ['$scope', function($scope) {
-  $scope.tagline = 'Turn the music up!';
-  $scope.points = {
-    icons: ['music-note','radio-waves','iphone'],
-    title: ['Choose your music', 'Stream it anywhere', 'Even on the go'],
-    detail: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste cupiditate numquam delectus.'
-  }
+blocJams.controller('LandingCtrl', 
+  ['$scope', function($scope) {
+    $scope.tagline = 'Turn the music up!';
+    $scope.points = {
+      icons: ['music-note','radio-waves','iphone'],
+      title: ['Choose your music', 'Stream it anywhere', 'Even on the go'],
+      detail: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste cupiditate numquam delectus.'
+    }
 }]);
 
 blocJams.controller('CollectionCtrl', 
@@ -134,6 +131,14 @@ blocJams.directive('mainControls', function() {
     restrict: 'AE',
     templateUrl: '/templates/main-controls.html',
     replace: true
+  }
+});
+
+blocJams.directive('songsListTable', function() {
+  return {
+    restrict: 'AE',
+    transclude: true,
+    templateUrl: '/templates/table.html'
   }
 })
 
