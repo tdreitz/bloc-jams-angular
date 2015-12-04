@@ -47,13 +47,13 @@ div.album {
   border-bottom: 1px solid rgba(255,255,255,0.5);
 }
 
-.song-item-number {
-  width: 5%;
-  min-width: 30px;
+.album-view-song-item:hover {
+  cursor: pointer;
 }
 
 .song-item-number {
-  cursor: pointer;
+  width: 5%;
+  min-width: 30px;
 }
 
 .song-item-title {

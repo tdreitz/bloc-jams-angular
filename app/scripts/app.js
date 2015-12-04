@@ -49,14 +49,30 @@ blocJams.controller('AlbumCtrl',
     function($scope, $log, musicPlayer){
 
       $scope.musicPlayer = musicPlayer
-      // $log.log($scope.musicPlayer.albumsObject)
-      // $log.log($scope.musicPlayer.albumsObject.picasso)
 
-      $scope.playAndTrack = function() {
-        $scope.musicPlayer.albumsObject.picasso.songs[0].buzzSoundFile.togglePlay();
+      $scope.currentSong = $scope.musicPlayer.currentlyPlayingSong;
 
-        $scope.musicPlayer[1] = !$scope.musicPlayer.albumsObject.picasso.songs[0].buzzSoundFile.isPaused();
 
+      $scope.playAndTrack = function(index) {
+
+        // $log.log($scope.currentSong);
+
+        if ($scope.currentSong === null) {
+          $scope.currentSong = $scope.songs_list[index];
+          $scope.currentSong.buzzSoundFile.togglePlay();
+        } else if ($scope.songs_list[index] === $scope.currentSong) {
+          $scope.currentSong = $scope.songs_list[index];
+          $scope.currentSong.buzzSoundFile.togglePlay();
+        } else if ($scope.songs_list[index] !== $scope.currentSong) {
+          $scope.currentSong.buzzSoundFile.pause();
+          $scope.currentSong = $scope.songs_list[index];
+          $scope.currentSong.buzzSoundFile.togglePlay();          
+        }
+        
+        $log.log($scope.currentSong);
+
+        // $scope.musicPlayer.albumsObject.picasso.songs[0].buzzSoundFile.togglePlay();
+        // $scope.musicPlayer[1] = !$scope.musicPlayer.albumsObject.picasso.songs[0].buzzSoundFile.isPaused();
         //$log.log($scope.musicPlayer);
       }     
 
