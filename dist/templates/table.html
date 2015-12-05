@@ -1,6 +1,9 @@
 <table class="album-view-song-list">
-  <tr ng-repeat="song in songs_list" ng-click="playAndTrack($index)" class="album-view-song-item">
-     <td class="song-item-number" data-song-number=""> {{ $index + 1 }} </td>
+  <tr ng-repeat="song in songs_list" ng-mouseover="isHovered=true" ng-mouseleave="isHovered=false" ng-click="playAndTrack($index)" class="album-view-song-item">
+     <td class="song-item-number"> 
+      <span ng-hide="isHovered"> {{ $index + 1 }} </span>
+      <a ng-show="isHovered" class="album-song-button"><span class="ion-play"></span></a>
+     </td>
     <td class="song-item-title">  {{ song_list_names[$index] }}  </td>
     <td class="song-item-duration">  {{ song_list_length[$index] }}  </td>
   </tr>

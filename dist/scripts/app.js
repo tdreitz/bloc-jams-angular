@@ -53,6 +53,13 @@ blocJams.controller('AlbumCtrl',
         return song_array;
       };
 
+      $scope.onTableHover = function() {
+        
+        $scope.playButtonTemplate = '<a class="album-song-button"><span class="ion-play"></span></a>';
+        $scope.isHovered = false;
+
+      }
+
       $scope.playAndTrack = function(index) {
         if ($scope.currentSong === null) {
           $scope.currentSong = $scope.songs_list[index];
@@ -137,8 +144,23 @@ blocJams.directive('mainControls', function() {
 blocJams.directive('songsListTable', function() {
   return {
     restrict: 'AE',
-    transclude: true,
-    templateUrl: '/templates/table.html'
+    replace: true,
+    templateUrl: '/templates/table.html',
+    compile: function(elem, attrs) {
+      // console.log('Compiling...');
+      // console.log(elem);
+      
+      return {
+
+        post: function(scope, elements, attrs) {
+
+          console.log('Post-linking...');
+          console.log(elements);
+          console.log(scope);
+
+        }
+      }
+    }
   }
 })
 
