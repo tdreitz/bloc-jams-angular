@@ -53,26 +53,27 @@ blocJams.controller('AlbumCtrl',
         return song_array;
       };
 
-      $scope.onTableHover = function() {
-        
-        $scope.playButtonTemplate = '<a class="album-song-button"><span class="ion-play"></span></a>';
-        $scope.isHovered = false;
-
-      }
-
       $scope.playAndTrack = function(index) {
+
         if ($scope.currentSong === null) {
           $scope.currentSong = $scope.songs_list[index];
           $scope.currentSong.buzzSoundFile.togglePlay();
+          $scope.activeSongIndex = index;
         } else if ($scope.songs_list[index] === $scope.currentSong) {
           $scope.currentSong = $scope.songs_list[index];
           $scope.currentSong.buzzSoundFile.togglePlay();
+          $scope.activeSongIndex = !index;
         } else if ($scope.songs_list[index] !== $scope.currentSong) {
           $scope.currentSong.buzzSoundFile.pause();
           $scope.currentSong = $scope.songs_list[index];
-          $scope.currentSong.buzzSoundFile.togglePlay();          
+          $scope.currentSong.buzzSoundFile.togglePlay();
+          $scope.activeSongIndex = index;  
         }
-      };     
+      };
+         
+      $scope.isPlaying = function(index) { 
+        return $scope.activeSongIndex === index;
+       } 
 
       $scope.playerBarToggle = function() {
         $scope.currentSong.buzzSoundFile.togglePlay();
@@ -96,6 +97,8 @@ blocJams.controller('AlbumCtrl',
         }
 
         $scope.currentSong = nextSong;
+
+        $log.log($scope.currentSong);
       }
 
       $scope.previous = function() {
@@ -125,6 +128,7 @@ blocJams.controller('AlbumCtrl',
       $scope.song_list_length = $scope.get_song_prop('length');
       $scope.currentSong = $scope.musicPlayer.currentlyPlayingSong;
 
+      $log.log($scope.currentSong);     
 }]);
 
 blocJams.directive('bjPoints', function() {
@@ -146,21 +150,6 @@ blocJams.directive('songsListTable', function() {
     restrict: 'AE',
     replace: true,
     templateUrl: '/templates/table.html',
-    compile: function(elem, attrs) {
-      // console.log('Compiling...');
-      // console.log(elem);
-      
-      return {
-
-        post: function(scope, elements, attrs) {
-
-          console.log('Post-linking...');
-          console.log(elements);
-          console.log(scope);
-
-        }
-      }
-    }
   }
 })
 
