@@ -62,9 +62,11 @@ blocJams.controller('AlbumCtrl',
         } else if ($scope.songs_list[index] === $scope.currentSong) {
           if (!$scope.currentSong.buzzSoundFile.isPaused()) {
             $scope.activeSongIndex = !index;
+            console.log($scope.activeSongIndex)
             $scope.currentSong.buzzSoundFile.pause();
           } else {
             $scope.activeSongIndex = index;
+            console.log($scope.activeSongIndex);
             $scope.currentSong.buzzSoundFile.play();
           }
         } else if ($scope.songs_list[index] !== $scope.currentSong) {
@@ -77,11 +79,26 @@ blocJams.controller('AlbumCtrl',
          
       $scope.isPlaying = function(index) { 
         return $scope.activeSongIndex === index;
-       } 
+       }
 
       $scope.playerBarToggle = function() {
-        // !$scope.currentSong.buzzSoundFile.isPaused();
-        $scope.activeSongIndex = !$scope.activeSongIndex;
+        for (var i = 0; i < $scope.songs_list.length; i++) {
+          if ($scope.songs_list[i] === $scope.currentSong) {
+            var num = i;
+          }
+        };
+        
+        if (!$scope.currentSong.buzzSoundFile.isPaused()) {
+          $scope.activeSongIndex = !$scope.activeSongIndex;
+        } if ($scope.currentSong.buzzSoundFile.isPaused()) {
+          $scope.activeSongIndex = num;
+        }
+
+        // if (!$scope.currentSong.buzzSoundFile.isPaused()) {
+        //   $scope.activeSongIndex = !$scope.activeSongIndex;
+        // } else if ($scope.currentSong.buzzSoundFile.isPaused()) {
+        //   $scope.activeSongIndex = 2;
+        // }
         $scope.currentSong.buzzSoundFile.togglePlay();
       };
 
