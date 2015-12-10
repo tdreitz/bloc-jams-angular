@@ -42,8 +42,8 @@ blocJams.controller('CollectionCtrl',
 }]);
 
 blocJams.controller('AlbumCtrl', 
-  ['$scope', '$log', 'musicPlayer',
-    function($scope, $log, musicPlayer){
+  ['$scope', '$log', 'musicPlayer', 'trackSong',
+    function($scope, $log, musicPlayer, trackSong){
 
       $scope.get_song_prop = function(prop) {
         var song_array = [];
@@ -60,11 +60,14 @@ blocJams.controller('AlbumCtrl',
           $scope.currentSong.buzzSoundFile.togglePlay();
           $scope.activeSongIndex = index;
         } else if ($scope.songs_list[index] === $scope.currentSong) {
-          $scope.currentSong = $scope.songs_list[index];
           $scope.currentSong.buzzSoundFile.togglePlay();
-          $scope.activeSongIndex = !index;
+          if ($scope.currentSong.buzzSoundFile.isPaused()) {
+            $scope.activeSongIndex = !index;
+          } else {
+            $scope.activeSongIndex = index;
+          }
         } else if ($scope.songs_list[index] !== $scope.currentSong) {
-          $scope.currentSong.buzzSoundFile.pause();
+          $scope.currentSong.buzzSoundFile.stop();
           $scope.currentSong = $scope.songs_list[index];
           $scope.currentSong.buzzSoundFile.togglePlay();
           $scope.activeSongIndex = index;  
@@ -77,6 +80,7 @@ blocJams.controller('AlbumCtrl',
 
       $scope.playerBarToggle = function() {
         $scope.currentSong.buzzSoundFile.togglePlay();
+        $scope.songStatus = $scope.currentSong.buzzSoundFile.isPaused();
       };
 
       $scope.next = function() {
@@ -90,15 +94,11 @@ blocJams.controller('AlbumCtrl',
             }
           } 
         };
-
         if (!$scope.currentSong.buzzSoundFile.isPaused()) {
           $scope.currentSong.buzzSoundFile.stop();
           nextSong.buzzSoundFile.play();
         }
-
         $scope.currentSong = nextSong;
-
-        $log.log($scope.currentSong);
       }
 
       $scope.previous = function() {
@@ -127,6 +127,7 @@ blocJams.controller('AlbumCtrl',
       $scope.song_list_names = $scope.get_song_prop('name');
       $scope.song_list_length = $scope.get_song_prop('length');
       $scope.currentSong = $scope.musicPlayer.currentlyPlayingSong;
+      $scope.songStatus = trackSong.isPaused;
 
       $log.log($scope.currentSong);     
 }]);
@@ -175,6 +176,13 @@ blocJams.service('musicPlayer', function() {
 
   return persistentData;
 });
+
+blocJams.service('trackSong', function() {
+  var songStatus = {
+    isPaused: true
+  }
+  return songStatus;
+})
 
 
 
