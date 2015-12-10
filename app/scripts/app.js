@@ -94,25 +94,23 @@ blocJams.controller('AlbumCtrl',
           $scope.activeSongIndex = num;
         }
 
-        // if (!$scope.currentSong.buzzSoundFile.isPaused()) {
-        //   $scope.activeSongIndex = !$scope.activeSongIndex;
-        // } else if ($scope.currentSong.buzzSoundFile.isPaused()) {
-        //   $scope.activeSongIndex = 2;
-        // }
         $scope.currentSong.buzzSoundFile.togglePlay();
       };
 
       $scope.next = function() {
-        var nextSong;
+        var nextSong; 
 
         for (var i = 0; i < $scope.songs_list.length; i++) {
           if ($scope.songs_list[i] === $scope.currentSong) {
+            $scope.activeSongIndex = $scope.activeSongIndex + 1;;
             nextSong = $scope.songs_list[i + 1];
             if($scope.currentSong === $scope.songs_list[4]) {
               nextSong = $scope.songs_list[0];
+              $scope.activeSongIndex = 0;
             }
           } 
         };
+
         if (!$scope.currentSong.buzzSoundFile.isPaused()) {
           $scope.currentSong.buzzSoundFile.stop();
           nextSong.buzzSoundFile.play();
@@ -125,8 +123,10 @@ blocJams.controller('AlbumCtrl',
 
         for (var i = 0; i < $scope.songs_list.length; i++) {
           if ($scope.songs_list[i] === $scope.currentSong) {
+            $scope.activeSongIndex = $scope.activeSongIndex - 1;
             previousSong = $scope.songs_list[i - 1];
             if($scope.currentSong === $scope.songs_list[0]) {
+              $scope.activeSongIndex = 4;
               previousSong = $scope.songs_list[4];
             }
           } 
