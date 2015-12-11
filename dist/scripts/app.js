@@ -62,11 +62,9 @@ blocJams.controller('AlbumCtrl',
         } else if ($scope.songs_list[index] === $scope.currentSong) {
           if (!$scope.currentSong.buzzSoundFile.isPaused()) {
             $scope.activeSongIndex = !index;
-            console.log($scope.activeSongIndex)
             $scope.currentSong.buzzSoundFile.pause();
           } else {
             $scope.activeSongIndex = index;
-            console.log($scope.activeSongIndex);
             $scope.currentSong.buzzSoundFile.play();
           }
         } else if ($scope.songs_list[index] !== $scope.currentSong) {
@@ -75,9 +73,11 @@ blocJams.controller('AlbumCtrl',
           $scope.currentSong.buzzSoundFile.togglePlay();
           $scope.activeSongIndex = index;  
         }
+
+        console.log($scope.activeSongIndex);
       };
          
-      $scope.isPlaying = function(index) { 
+      $scope.isPlaying = function(index) {
         return $scope.activeSongIndex === index;
        }
 
