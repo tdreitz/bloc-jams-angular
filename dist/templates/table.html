@@ -1,5 +1,5 @@
 <table class="album-view-song-list">
-  <tr ng-repeat="song in songs_list" ng-mouseover="isHovered=true" ng-mouseleave="isHovered=false" ng-click="playAndTrack($index + 1)" class="album-view-song-item">
+  <tr ng-repeat="song in songs_list" ng-mouseover="isHovered=true" ng-mouseleave="isHovered=false" ng-click="playAndTrack($index)" class="album-view-song-item">
      <td class="song-item-number">
       
       <span ng-hide="isHovered" ng-if="!isPlaying($index + 1)"> {{ $index + 1 }} </span>

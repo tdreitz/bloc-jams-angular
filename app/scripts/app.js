@@ -58,7 +58,7 @@ blocJams.controller('AlbumCtrl',
         if ($scope.currentSong === null) {
           $scope.currentSong = $scope.songs_list[index];
           $scope.currentSong.buzzSoundFile.togglePlay();
-          $scope.activeSongIndex = index;
+          $scope.activeSongIndex = index + 1;
         } else if ($scope.songs_list[index] === $scope.currentSong) {
           if (!$scope.currentSong.buzzSoundFile.isPaused()) {
             $scope.activeSongIndex = !index;
@@ -73,8 +73,6 @@ blocJams.controller('AlbumCtrl',
           $scope.currentSong.buzzSoundFile.togglePlay();
           $scope.activeSongIndex = index;  
         }
-
-        console.log($scope.activeSongIndex);
       };
          
       $scope.isPlaying = function(index) {
@@ -91,7 +89,7 @@ blocJams.controller('AlbumCtrl',
         if (!$scope.currentSong.buzzSoundFile.isPaused()) {
           $scope.activeSongIndex = !$scope.activeSongIndex;
         } if ($scope.currentSong.buzzSoundFile.isPaused()) {
-          $scope.activeSongIndex = num;
+          $scope.activeSongIndex = num + 1;
         }
 
         $scope.currentSong.buzzSoundFile.togglePlay();
@@ -102,14 +100,14 @@ blocJams.controller('AlbumCtrl',
 
         for (var i = 0; i < $scope.songs_list.length; i++) {
           if ($scope.songs_list[i] === $scope.currentSong) {
-            $scope.activeSongIndex = $scope.activeSongIndex + 1;;
+            $scope.activeSongIndex = $scope.activeSongIndex + 1;
             nextSong = $scope.songs_list[i + 1];
             if($scope.currentSong === $scope.songs_list[4]) {
               nextSong = $scope.songs_list[0];
-              $scope.activeSongIndex = 0;
+              $scope.activeSongIndex = 1;
+              }
             }
           } 
-        };
 
         if (!$scope.currentSong.buzzSoundFile.isPaused()) {
           $scope.currentSong.buzzSoundFile.stop();
@@ -126,7 +124,8 @@ blocJams.controller('AlbumCtrl',
             $scope.activeSongIndex = $scope.activeSongIndex - 1;
             previousSong = $scope.songs_list[i - 1];
             if($scope.currentSong === $scope.songs_list[0]) {
-              $scope.activeSongIndex = 4;
+              console.log($scope.activeSongIndex);
+              $scope.activeSongIndex = 5;
               previousSong = $scope.songs_list[4];
             }
           } 
