@@ -15,31 +15,6 @@
       <songs-list-table></songs-list-table>
   </main>
 
-  <section class="player-bar">
-    <div class="container">
-      <main-controls></main-controls>
-
-      <div class="control-group currently-playing">
-        <h2 class="artist-song-mobile"> {{ album_info.artist }}<span ng-if="currentSong"> - </span>{{ currentSong.name }}</h2>
-        <h2 class="song-name">{{ currentSong.name }}</h2>
-        <h2 class="artist-name"> {{ album_info.artist }} </h2>
-        <div class="seek-control">
-          <div class="seek-bar">
-            <div class="fill"></div>
-            <div class="thumb"></div>
-          </div>
-          <div class="current-time">2:30</div>
-          <div class="total-time">4:45</div>
-        </div>
-      </div>
-        
-      <div class="control-group volume">
-        <span class="ion-volume-high icon"></span>
-        <div class="seek-bar">
-          <div class="fill"></div>
-          <div class="thumb"></div>
-        </div>
-      </div>
-    </div>
-  </section>
+  <!-- player-bar directive -->
+  <player-bar></player-bar>
 </div>

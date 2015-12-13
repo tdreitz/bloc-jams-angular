@@ -42,8 +42,8 @@ blocJams.controller('CollectionCtrl',
 }]);
 
 blocJams.controller('AlbumCtrl', 
-  ['$scope', '$log', 'musicPlayer', 'trackSong',
-    function($scope, $log, musicPlayer, trackSong){
+  ['$scope', '$interval', '$log', 'musicPlayer',
+    function($scope, $interval, $log, musicPlayer){
 
       $scope.get_song_prop = function(prop) {
         var song_array = [];
@@ -64,17 +64,40 @@ blocJams.controller('AlbumCtrl',
             $scope.activeSongIndex = !index;
             $scope.currentSong.buzzSoundFile.pause();
           } else {
-            $scope.activeSongIndex = index;
+            $scope.activeSongIndex = index + 1;
             $scope.currentSong.buzzSoundFile.play();
           }
         } else if ($scope.songs_list[index] !== $scope.currentSong) {
           $scope.currentSong.buzzSoundFile.stop();
           $scope.currentSong = $scope.songs_list[index];
           $scope.currentSong.buzzSoundFile.togglePlay();
-          $scope.activeSongIndex = index;  
+          $scope.activeSongIndex = index + 1;  
         }
+
+        $scope.setVolume($scope.currentVol);
+
+        $scope.getTime();
       };
-         
+
+      $scope.getTime = function() {
+
+        $scope.currentTime = "0:00";
+
+        $interval(function() {
+          $scope.currentTime = $scope.currentSong.buzzSoundFile.getTime();
+          
+          $scope.currentTime = Math.floor($scope.currentTime);
+          var mins = Math.floor($scope.currentTime / 60);
+          var secs = $scope.currentTime % 60;
+          secs = secs.toString();
+          if (secs.length < 2) {
+            secs = '0' + secs;
+          }
+          var totalTime = mins + ':' + secs;
+          $scope.currentTime = totalTime;
+        }, 1000);
+      };
+
       $scope.isPlaying = function(index) {
         return $scope.activeSongIndex === index;
        }
@@ -124,7 +147,6 @@ blocJams.controller('AlbumCtrl',
             $scope.activeSongIndex = $scope.activeSongIndex - 1;
             previousSong = $scope.songs_list[i - 1];
             if($scope.currentSong === $scope.songs_list[0]) {
-              console.log($scope.activeSongIndex);
               $scope.activeSongIndex = 5;
               previousSong = $scope.songs_list[4];
             }
@@ -139,15 +161,26 @@ blocJams.controller('AlbumCtrl',
         $scope.currentSong = previousSong;
       }
 
+      $scope.setVolume = function(volume) {
+        if ($scope.currentSong) {
+          $scope.currentSong.buzzSoundFile.setVolume(volume);
+        }
+      };
+
+      $scope.seek = function(time) {
+        if ($scope.currentSong) {
+          $scope.currentSong.buzzSoundFile.setTime(time);
+        }
+      }
+
       $scope.musicPlayer = musicPlayer
       $scope.album_info = $scope.musicPlayer.albumsObject.picasso      
       $scope.songs_list = $scope.album_info.songs;
       $scope.song_list_names = $scope.get_song_prop('name');
       $scope.song_list_length = $scope.get_song_prop('length');
       $scope.currentSong = $scope.musicPlayer.currentlyPlayingSong;
-      $scope.songStatus = trackSong.isPaused;
-
-      $log.log($scope.currentSong);     
+      $scope.currentTime;
+      $scope.currentVol = 50;     
 }]);
 
 blocJams.directive('bjPoints', function() {
@@ -169,6 +202,25 @@ blocJams.directive('songsListTable', function() {
     restrict: 'AE',
     replace: true,
     templateUrl: '/templates/table.html',
+  }
+})
+
+blocJams.directive('playerBar', function() {
+  return {
+    restrict: 'AE',
+    replace: true,
+    templateUrl: '/templates/player-bar.html'
+  }
+})
+
+blocJams.directive('seekBar', function() {
+  return {
+    restrict: 'AE',
+    replace: true,
+    templateUrl: '/templates/seek-bar.html',
+    scope: {
+
+    }
   }
 })
 
@@ -194,14 +246,6 @@ blocJams.service('musicPlayer', function() {
 
   return persistentData;
 });
-
-blocJams.service('trackSong', function() {
-  var songStatus = {
-    isPaused: true
-  }
-  return songStatus;
-})
-
 
 
 
