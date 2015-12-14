@@ -195,10 +195,19 @@ blocJams.controller('AlbumCtrl',
         }
       };
 
-      $scope.userSeeks = function(ev) {
-        $scope.logEvent = ev;
-        $log.log($scope.logEvent);
-      }
+      $scope.setSeekBarWidth = function(ev) {
+        // $log.log(ev)
+        seekBarFillRatio = ev.offsetX / ev.target.clientWidth;
+        offsetXPercent = seekBarFillRatio * 100;
+        offsetXPercent = Math.max(0, offsetXPercent);
+        offsetXPercent = Math.min(offsetXPercent, 100);
+        percentageString = offsetXPercent + '%';
+
+        $scope.setFill = {width: percentageString};
+        $scope.setThumb = {left: percentageString};
+
+        $log.log(ev.target);
+      };
 
       $scope.musicPlayer = musicPlayer
       $scope.album_info = $scope.musicPlayer.albumsObject.picasso      
@@ -246,7 +255,9 @@ blocJams.directive('seekBar', function() {
     restrict: 'AE',
     replace: true,
     templateUrl: '/templates/seek-bar.html',
-    scope: {},
+    // scope: {
+    //   click
+    // },
     compile: function(elem, attrs) {
 
       // console.log('Compiling...');
@@ -260,7 +271,7 @@ blocJams.directive('seekBar', function() {
           var domSelector = angular.element(document.querySelector('.seek-control')).attr('class');
 
           if(directiveSelector === domSelector) {
-            console.log(scope);
+            console.log(element);
           }
         }
 
