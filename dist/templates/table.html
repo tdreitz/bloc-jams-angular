@@ -1,12 +1,12 @@
 <table class="album-view-song-list">
-  <tr ng-repeat="song in songs_list" ng-mouseover="isHovered=true" ng-mouseleave="isHovered=false" ng-click="playAndTrack($index)" class="album-view-song-item">
+  <tr ng-repeat="song in songs_list" ng-mouseover="isHovered=true" ng-mouseleave="isHovered=false" ng-click="playAndTrack($index, $event)" class="album-view-song-item">
      <td class="song-item-number">
       
-      <span ng-hide="isHovered" ng-if="!isPlaying($index + 1)"> {{ $index + 1 }} </span>
+      <span ng-hide="isHovered" ng-if="!tableElmtIsPlaying($index + 1)"> {{ $index + 1 }} </span>
 
-      <a ng-show="isHovered" ng-if="!isPlaying($index + 1)" class="album-song-button"><span class="ion-play"></span></a> 
+      <a ng-show="isHovered" ng-if="!tableElmtIsPlaying($index + 1)" class="album-song-button"><span class="ion-play"></span></a> 
       
-      <a ng-if="isPlaying($index + 1)"z class="album-song-button"><span class="ion-pause"></span></a>
+      <a ng-if="tableElmtIsPlaying($index + 1)"z class="album-song-button"><span class="ion-pause"></span></a>
 
      </td>
     <td class="song-item-title">  {{ song_list_names[$index] }}  </td>
