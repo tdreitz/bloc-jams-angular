@@ -7,13 +7,13 @@
         <h2 class="song-name">{{ currentSong.name }}</h2>
         <h2 class="artist-name"> {{ album_info.artist }} </h2>
         <div class="seek-control">
-          <seek-bar></seek-bar>
+          <seek-bar ng-click="userSeeks($event)"></seek-bar>
           <div class="current-time">{{ currentTime }}</div>
           <div class="total-time"> {{ currentSong.length }} </div>
         </div>
       </div>
         
-      <div class="control-group volume">
+      <div ng-click="userSeeks($event)" class="control-group volume">
         <span class="ion-volume-high icon"></span>
         <seek-bar></seek-bar>
       </div>

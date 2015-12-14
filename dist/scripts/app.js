@@ -78,6 +78,8 @@ blocJams.controller('AlbumCtrl',
         $scope.getTime();
 
         $scope.songStatus = $scope.userIsPlaying.isPlaying(ev);
+
+        $log.log(ev);
       };
 
       $scope.tableElmtIsPlaying = function(index) {
@@ -193,6 +195,11 @@ blocJams.controller('AlbumCtrl',
         }
       };
 
+      $scope.userSeeks = function(ev) {
+        $scope.logEvent = ev;
+        $log.log($scope.logEvent);
+      }
+
       $scope.musicPlayer = musicPlayer
       $scope.album_info = $scope.musicPlayer.albumsObject.picasso      
       $scope.songs_list = $scope.album_info.songs;
@@ -239,7 +246,25 @@ blocJams.directive('seekBar', function() {
     restrict: 'AE',
     replace: true,
     templateUrl: '/templates/seek-bar.html',
-    scope: {
+    scope: {},
+    compile: function(elem, attrs) {
+
+      // console.log('Compiling...');
+      // console.log(elem.html());
+
+      return {
+
+        post: function(scope, element, attrs) {
+
+          var directiveSelector = element.parent().attr('class');
+          var domSelector = angular.element(document.querySelector('.seek-control')).attr('class');
+
+          if(directiveSelector === domSelector) {
+            console.log(scope);
+          }
+        }
+
+      }
 
     }
   }
