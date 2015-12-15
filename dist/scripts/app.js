@@ -246,29 +246,6 @@ blocJams.directive('seekBar', function() {
     },
     link: function(scope, element, attrs) {
 
-          // scope.updateSeekPercentage = function(ratio) {
-          //   offsetXPercent = seekBarFillRatio * 100;
-          //   offsetXPercent = Math.max(0, offsetXPercent);
-          //   offsetXPercent = Math.min(offsetXPercent, 100);
-          //   percentageString = offsetXPercent + '%';
-          //   // return percentageString;
-          // }
-
-          // scope.setSeekBarWidth = function(ev) {
-        
-          //   // seekBarFillRatio = ev.offsetX / ev.target.clientWidth;
-
-          //   percentageString = scope.updateSeekPercentage(seekBarFillRatio);
-
-          //   var fill = angular.element(element.children()[0]);
-          //   var thumb = angular.element(element.children()[1]);
-
-          //   fill.css({width: percentageString});
-          //   thumb.css({left: percentageString});
-
-          //   console.log(scope.currentSongObject);
-          // };
-
           scope.setVolume = function(volume) {
             console.log(volume);
             if (scope.currentSongObject) {
@@ -277,8 +254,9 @@ blocJams.directive('seekBar', function() {
           };
 
           scope.seek = function(time) {
-            if (scope.currentSong) {
-              scope.currentSong.buzzSoundFile.setTime(time);
+            // console.log(time);
+            if (scope.currentSongObject) {
+              scope.currentSongObject.buzzSoundFile.setTime(time);
             }
           };
 
@@ -297,7 +275,12 @@ blocJams.directive('seekBar', function() {
             } else {
               element.on('click', function(ev) {
                 scope.currentSongObject;
-                // scope.setSeekBarWidth(ev);
+                // console.log('click location: ', seekBarFillRatio);
+                // console.log('current time of song: ', scope.currentSongObject.buzzSoundFile.getTime());
+                // console.log('current % of song: ', scope.currentSongObject.buzzSoundFile.getPercent());
+                // console.log('song duration: ', scope.currentSongObject.buzzSoundFile.getDuration());
+                // console.log('song song location to: ', seekBarFillRatio * scope.currentSongObject.buzzSoundFile.getDuration());
+                scope.seek(seekBarFillRatio * scope.currentSongObject.buzzSoundFile.getDuration())
               });
             }
 
