@@ -246,30 +246,28 @@ blocJams.directive('seekBar', function() {
     },
     link: function(scope, element, attrs) {
 
-          scope.updateSeekPercentage = function(ratio) {
-            offsetXPercent = seekBarFillRatio * 100;
-            offsetXPercent = Math.max(0, offsetXPercent);
-            offsetXPercent = Math.min(offsetXPercent, 100);
-            percentageString = offsetXPercent + '%';
-            return percentageString;
-          }
+          // scope.updateSeekPercentage = function(ratio) {
+          //   offsetXPercent = seekBarFillRatio * 100;
+          //   offsetXPercent = Math.max(0, offsetXPercent);
+          //   offsetXPercent = Math.min(offsetXPercent, 100);
+          //   percentageString = offsetXPercent + '%';
+          //   // return percentageString;
+          // }
 
-          scope.setSeekBarWidth = function(ev) {
-
-            console.log(scope)
+          // scope.setSeekBarWidth = function(ev) {
         
-            seekBarFillRatio = ev.offsetX / ev.target.clientWidth;
+          //   // seekBarFillRatio = ev.offsetX / ev.target.clientWidth;
 
-            percentageString = scope.updateSeekPercentage(seekBarFillRatio);
+          //   percentageString = scope.updateSeekPercentage(seekBarFillRatio);
 
-            var fill = angular.element(element.children()[0]);
-            var thumb = angular.element(element.children()[1]);
+          //   var fill = angular.element(element.children()[0]);
+          //   var thumb = angular.element(element.children()[1]);
 
-            fill.css({width: percentageString});
-            thumb.css({left: percentageString});
+          //   fill.css({width: percentageString});
+          //   thumb.css({left: percentageString});
 
-            console.log(scope.currentSongObject);
-          };
+          //   console.log(scope.currentSongObject);
+          // };
 
           scope.setVolume = function(volume) {
             console.log(volume);
@@ -285,23 +283,35 @@ blocJams.directive('seekBar', function() {
           };
 
           element.on('click', function(ev) {
-            seekBarFillRatio = ev.offsetX / ev.target.clientWidth;
-          });
 
-          var directiveSelector = element.parent().attr('class');
-          var domSelector = angular.element(document.querySelector('.volume')).attr('class')
-          
-          if(directiveSelector === domSelector) {
-            element.on('click', function(ev) {
-              scope.currentSongObject;
-              scope.setVolume(seekBarFillRatio * 100);
-            })
-          } else {
-            element.on('click', function(ev) {
-              scope.currentSongObject;
-              // scope.setSeekBarWidth(ev);
-            });
-          }
+            seekBarFillRatio = ev.offsetX / ev.target.clientWidth;
+
+            var directiveSelector = element.parent().attr('class');
+            var domSelector = angular.element(document.querySelector('.volume')).attr('class')
+            
+            if(directiveSelector === domSelector) {
+              element.on('click', function(ev) {
+                scope.currentSongObject;
+                scope.setVolume(seekBarFillRatio * 100);
+              })
+            } else {
+              element.on('click', function(ev) {
+                scope.currentSongObject;
+                // scope.setSeekBarWidth(ev);
+              });
+            }
+
+            offsetXPercent = seekBarFillRatio * 100;
+            offsetXPercent = Math.max(0, offsetXPercent);
+            offsetXPercent = Math.min(offsetXPercent, 100);
+            percentageString = offsetXPercent + '%';
+
+            var fill = angular.element(element.children()[0]);
+            var thumb = angular.element(element.children()[1]);
+
+            fill.css({width: percentageString});
+            thumb.css({left: percentageString});
+          });
         }
       }
 })
