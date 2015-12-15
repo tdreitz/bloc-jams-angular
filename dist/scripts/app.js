@@ -74,7 +74,6 @@ blocJams.controller('AlbumCtrl',
           $scope.activeSongIndex = index + 1;  
         }
 
-        $scope.setVolume($scope.currentVol);
         $scope.getTime();
 
         $scope.songStatus = $scope.userIsPlaying.isPlaying(ev);
@@ -183,17 +182,17 @@ blocJams.controller('AlbumCtrl',
         $scope.currentSong = previousSong;
       };
 
-      $scope.setVolume = function(volume) {
-        if ($scope.currentSong) {
-          $scope.currentSong.buzzSoundFile.setVolume(volume);
-        }
-      };
+      // $scope.setVolume = function(volume) {
+      //   if ($scope.currentSong) {
+      //     $scope.currentSong.buzzSoundFile.setVolume(volume);
+      //   }
+      // };
 
-      $scope.seek = function(time) {
-        if ($scope.currentSong) {
-          $scope.currentSong.buzzSoundFile.setTime(time);
-        }
-      };
+      // $scope.seek = function(time) {
+      //   if ($scope.currentSong) {
+      //     $scope.currentSong.buzzSoundFile.setTime(time);
+      //   }
+      // };
 
       $scope.musicPlayer = musicPlayer
       $scope.album_info = $scope.musicPlayer.albumsObject.picasso      
@@ -203,7 +202,7 @@ blocJams.controller('AlbumCtrl',
       $scope.currentSong = $scope.musicPlayer.currentlyPlayingSong;
       $scope.songStatus;
       $scope.currentTime;
-      $scope.currentVol = 50;     
+      $scope.currentVol = 50;  
 }]);
 
 blocJams.directive('bjPoints', function() {
@@ -242,12 +241,10 @@ blocJams.directive('seekBar', function() {
     replace: true,
     templateUrl: '/templates/seek-bar.html',
     scope: {
+      currentSongObject: "=",
       currentVol: "="
     },
     link: function(scope, element, attrs) {
-
-          // scope.setFill = null;
-          // scope.setThumb = null;
 
           scope.updateSeekPercentage = function(ratio) {
             offsetXPercent = seekBarFillRatio * 100;
@@ -258,6 +255,8 @@ blocJams.directive('seekBar', function() {
           }
 
           scope.setSeekBarWidth = function(ev) {
+
+            console.log(scope)
         
             seekBarFillRatio = ev.offsetX / ev.target.clientWidth;
 
@@ -266,23 +265,41 @@ blocJams.directive('seekBar', function() {
             var fill = angular.element(element.children()[0]);
             var thumb = angular.element(element.children()[1]);
 
-            console.log(fill);
-            console.log(thumb);
-
             fill.css({width: percentageString});
             thumb.css({left: percentageString});
+
+            console.log(scope.currentSongObject);
           };
+
+          scope.setVolume = function(volume) {
+            console.log(volume);
+            if (scope.currentSongObject) {
+              scope.currentSongObject.buzzSoundFile.setVolume(volume);
+            }
+          };
+
+          scope.seek = function(time) {
+            if (scope.currentSong) {
+              scope.currentSong.buzzSoundFile.setTime(time);
+            }
+          };
+
+          element.on('click', function(ev) {
+            seekBarFillRatio = ev.offsetX / ev.target.clientWidth;
+          });
 
           var directiveSelector = element.parent().attr('class');
           var domSelector = angular.element(document.querySelector('.volume')).attr('class')
           
           if(directiveSelector === domSelector) {
             element.on('click', function(ev) {
-              scope.setSeekBarWidth(ev);
+              scope.currentSongObject;
+              scope.setVolume(seekBarFillRatio * 100);
             })
           } else {
             element.on('click', function(ev) {
-              scope.setSeekBarWidth(ev);
+              scope.currentSongObject;
+              // scope.setSeekBarWidth(ev);
             });
           }
         }
