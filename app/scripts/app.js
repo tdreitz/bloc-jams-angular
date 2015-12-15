@@ -195,20 +195,6 @@ blocJams.controller('AlbumCtrl',
         }
       };
 
-      $scope.setSeekBarWidth = function(ev) {
-        // $log.log(ev)
-        seekBarFillRatio = ev.offsetX / ev.target.clientWidth;
-        offsetXPercent = seekBarFillRatio * 100;
-        offsetXPercent = Math.max(0, offsetXPercent);
-        offsetXPercent = Math.min(offsetXPercent, 100);
-        percentageString = offsetXPercent + '%';
-
-        $scope.setFill = {width: percentageString};
-        $scope.setThumb = {left: percentageString};
-
-        $log.log(ev.target);
-      };
-
       $scope.musicPlayer = musicPlayer
       $scope.album_info = $scope.musicPlayer.albumsObject.picasso      
       $scope.songs_list = $scope.album_info.songs;
@@ -255,30 +241,52 @@ blocJams.directive('seekBar', function() {
     restrict: 'AE',
     replace: true,
     templateUrl: '/templates/seek-bar.html',
-    // scope: {
-    //   click
-    // },
-    compile: function(elem, attrs) {
+    scope: {
+      currentVol: "="
+    },
+    link: function(scope, element, attrs) {
 
-      // console.log('Compiling...');
-      // console.log(elem.html());
+          // scope.setFill = null;
+          // scope.setThumb = null;
 
-      return {
+          scope.updateSeekPercentage = function(ratio) {
+            offsetXPercent = seekBarFillRatio * 100;
+            offsetXPercent = Math.max(0, offsetXPercent);
+            offsetXPercent = Math.min(offsetXPercent, 100);
+            percentageString = offsetXPercent + '%';
+            return percentageString;
+          }
 
-        post: function(scope, element, attrs) {
+          scope.setSeekBarWidth = function(ev) {
+        
+            seekBarFillRatio = ev.offsetX / ev.target.clientWidth;
+
+            percentageString = scope.updateSeekPercentage(seekBarFillRatio);
+
+            var fill = angular.element(element.children()[0]);
+            var thumb = angular.element(element.children()[1]);
+
+            console.log(fill);
+            console.log(thumb);
+
+            fill.css({width: percentageString});
+            thumb.css({left: percentageString});
+          };
 
           var directiveSelector = element.parent().attr('class');
-          var domSelector = angular.element(document.querySelector('.seek-control')).attr('class');
-
+          var domSelector = angular.element(document.querySelector('.volume')).attr('class')
+          
           if(directiveSelector === domSelector) {
-            console.log(element);
+            element.on('click', function(ev) {
+              scope.setSeekBarWidth(ev);
+            })
+          } else {
+            element.on('click', function(ev) {
+              scope.setSeekBarWidth(ev);
+            });
           }
         }
-
       }
-
-    }
-  }
 })
 
 blocJams.service('musicPlayer', function() {

@@ -6,17 +6,16 @@
         <h2 class="artist-song-mobile"> {{ album_info.artist }}<span ng-if="currentSong"> - </span>{{ currentSong.name }}</h2>
         <h2 class="song-name">{{ currentSong.name }}</h2>
         <h2 class="artist-name"> {{ album_info.artist }} </h2>
-        <div ng-click="setSeekBarWidth($event)" class="seek-control">
-          <seek-bar ></seek-bar>
+        <div class="seek-control">
+          <seek-bar></seek-bar>
           <div class="current-time">{{ currentTime }}</div>
-          <!-- <div class="current-time">{{ setWidth }}</div> -->
           <div class="total-time"> {{ currentSong.length }} </div>
         </div>
       </div>
         
-      <div ng-click="setSeekBarWidth($event)" class="control-group volume">
+      <div class="control-group volume">
         <span class="ion-volume-high icon"></span>
-        <seek-bar ></seek-bar>
+        <seek-bar current-vol="currentVol"></seek-bar>
       </div>
     </div>
   </section>
