@@ -1,6 +1,6 @@
 ## Bloc Jams - Angular
 
-A starter application for student projects in Bloc's [Frontend Web Development Course](https://www.bloc.io/frontend-development-bootcamp).
+An Angular JS dynamic music-streaming web application built from scratch [go to app](https://my-bloc-jams-angular.herokuapp.com/album).
 
 ![Bloc Jams - Album View](screen_shots/bloc_jams_album_page.png)
 
@@ -73,15 +73,10 @@ To reference any other assets, like the music in Bloc Jams, use the path `assets
 
 >See lines 14 and 35 of `Gruntfile.js` for the accepted file extensions of assets.
 
-### Difference between Pages and Templates
-
-The `templates` directory should hold any HTML files used as templates in Angular states configured by UI Router. All other HTML files belong in the `pages` directory.
 
 ### Procfile
 
 The `Procfile` is a file for [providing instructions to Heroku servers](https://devcenter.heroku.com/articles/procfile) that run after pushing new code to the repository. __Do not change the contents of the Procfile__ or Heroku will throw an error when you attempt to visit your application.
-
->For more information about how to use Heroku with Bloc's frontend applications, see our [resource on using Heroku](https://www.bloc.io/resources/using-heroku-frontend).
 
 ## Grunt plugins
 
